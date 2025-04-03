@@ -4,6 +4,7 @@ import SensorsIcon from "./aside/SensorsIcon";
 import PlansIcon from "./aside/PlansIcon";
 import SettingIcon from "./aside/SettingIcon";
 import ReportsIcon from "./aside/ReportsIcon";
+import LogoIcon from "./aside/LogoIcon";
 
 export {
   DashboardIcon,
@@ -12,4 +13,5 @@ export {
   PlansIcon,
   ReportsIcon,
   SettingIcon,
+  LogoIcon,
 };
