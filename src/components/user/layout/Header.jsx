@@ -27,7 +27,7 @@ const Header = () => {
     console.log("log out clicked");
   };
   return (
-    <header className="w-full h-[220px] bg-[#088d9cc5] rounded-xl bg-[url('/images/default/header-bg.png')] bg-no-repeat bg-cover bg-center bg-blend-overlay p-5 md:p-8 flex flex-col justify-between">
+    <header className="w-full h-[200px] bg-[#088d9cc5] rounded-xl bg-[url('/images/default/header-bg.png')] bg-no-repeat bg-cover bg-top bg-blend-overlay p-5 md:p-8 flex flex-col justify-between">
       <div className="flex justify-end">
         <div className="flex justify-end  items-center gap-4">
           <button
@@ -56,7 +56,7 @@ const Header = () => {
           </div>
         </div>
         {profileActive && (
-          <div className="absolute top-[85px] right-[42px] bg-white shadow-md rounded-lg w-[150px] z-10">
+          <div className="absolute top-[85px] right-[39px] bg-white shadow-md rounded-lg w-[150px] z-10">
             <Link
               className="flex items-center justify-between px-3 py-2 border-b border-gray-200"
               href={""}
