@@ -4,7 +4,7 @@ import Header from "@/components/user/layout/Header";
 const UserLayout = ({ children }) => {
   return (
     <section className="bg-[#F5F2FF] w-screen h-screen grid place-items-center overflow-hidden">
-      <section className="h-[calc(100vh-16px)] w-[calc(100vw-16px)] flex gap-6">
+      <section className="h-[calc(100vh-16px)] w-[calc(100vw-16px)] flex gap-4">
         <Aside />
         <div className="flex-1">
           <Header />

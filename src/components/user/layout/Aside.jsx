@@ -80,8 +80,8 @@ const Aside = () => {
               ? "/images/default/logo-icon.png"
               : "/images/default/logo.png"
           }
-          width={isMenuOpen ? 35 : 129}
-          height={isMenuOpen ? 35 : 38}
+          width={isMenuOpen ? 35 : 170}
+          height={isMenuOpen ? 35 : 40}
           alt="logo"
           className="mx-auto"
         />
