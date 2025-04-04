@@ -29,4 +29,10 @@ const dashboardCardsData = [
   },
 ];
 
-export { dashboardCardsData };
+const pieChartData = [
+  { name: "Building 1", value: 490 },
+  { name: "Building 2", value: 102 },
+  { name: "Building 3", value: 209 },
+];
+
+export { dashboardCardsData, pieChartData };

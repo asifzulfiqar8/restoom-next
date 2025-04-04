@@ -1,7 +1,7 @@
 "use client";
+import Modal from "@/components/global/Modal";
 import { useState } from "react";
 import { GoAlertFill } from "react-icons/go";
-// import Modal from "../../../../components/modals/Modal";
 
 const alerts = [
   "Heating - 1 sensor has problem",
@@ -39,7 +39,7 @@ const Alerts = () => {
         </div>
         <button
           onClick={() => handleModalOpen()}
-          className="text-primary text-xs"
+          className="text-primary text-xs cursor-pointer"
         >
           See all
         </button>
@@ -62,10 +62,10 @@ const Alerts = () => {
         </div>
       )}
 
-      {/* {modal && (
+      {modal && (
         <Modal title="All Alerts" onClose={handleModalClose}>
           <div>
-            <div className="modal-content overflow-y-auto max-h-64">
+            <div className="modal-content overflow-y-auto max-h-64 custom-scroll">
               {alerts.map((alert, i) => (
                 <div
                   key={i}
@@ -77,7 +77,7 @@ const Alerts = () => {
             </div>
           </div>
         </Modal>
-      )} */}
+      )}
     </div>
   );
 };
