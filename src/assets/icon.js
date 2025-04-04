@@ -5,6 +5,7 @@ import PlansIcon from "./aside/PlansIcon";
 import SettingIcon from "./aside/SettingIcon";
 import ReportsIcon from "./aside/ReportsIcon";
 import LogoIcon from "./aside/LogoIcon";
+import ArrowUpIcon from "./default/ArrowUpIcon";
 
 export {
   DashboardIcon,
@@ -14,4 +15,5 @@ export {
   ReportsIcon,
   SettingIcon,
   LogoIcon,
+  ArrowUpIcon,
 };
