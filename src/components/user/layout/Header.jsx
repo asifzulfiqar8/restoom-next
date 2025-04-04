@@ -43,7 +43,7 @@ const Header = () => {
       className="relative w-full h-[180px] rounded-xl 
   bg-[url('/images/default/header-bg.png')] bg-no-repeat bg-cover bg-top p-5 md:p-8"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#088d9c88] to-[#9550e48f] opacity-70 rounded-xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#088d9c] to-[#9550e4] opacity-55 rounded-xl"></div>
       <div className="relative z-50 h-full flex flex-col justify-between">
         <div className="flex justify-end">
           <div className="flex justify-end  items-center gap-4">
