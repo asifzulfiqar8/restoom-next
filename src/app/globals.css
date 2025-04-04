@@ -2,6 +2,7 @@
 
 :root {
   --primary: #a449eb;
+  --secondary: #078e9b;
   --aside-grad: linear-gradient(
     180deg,
     #039099 0%,
@@ -11,6 +12,7 @@
 
 @theme {
   --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
 }
 
 @layer utilities {

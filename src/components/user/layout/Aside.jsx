@@ -23,7 +23,7 @@ const pages = [
   {
     id: 2,
     title: "Buildings",
-    link: ["/buildings"],
+    link: ["/buildings", "/add-building"],
     icon: <BuildingIcon />,
   },
   {

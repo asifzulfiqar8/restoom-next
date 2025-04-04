@@ -2,10 +2,12 @@
 import dynamic from "next/dynamic";
 import Alerts from "./Alerts";
 import DashboardCard from "./DashboardCard";
-import { dashboardCardsData, pieChartData } from "@/data/data";
+import { buildingData, dashboardCardsData, pieChartData } from "@/data/data";
 import CustomLineChart from "@/components/global/charts/CustomLineChart";
 import { BuildingIcon } from "@/assets/icon";
 import PieChartComponent from "@/components/global/charts/PieChartComponent";
+import Link from "next/link";
+import BuildingCard from "@/components/global/BuildingCard";
 const Map = dynamic(() => import("./Map"), { ssr: false });
 
 const Dashboard = () => {
@@ -39,6 +41,24 @@ const Dashboard = () => {
             COLORS={["#FF955A", "#7A5AF8", "#34C1FD"]}
             icon="/images/dashboard/building.png"
           />
+        </div>
+        <div className="xl:col-span-12 rounded-2xl bg-white p-4 md:p-5 shadow-md">
+          <div className="mb-4 flex justify-between items-center">
+            <h4 className="text-base md:text-lg font-semibold text-[#05004E]">
+              All Buildings
+            </h4>
+            <Link
+              href="/buildings"
+              className="text-[#05004E99] text-sm font-medium"
+            >
+              See All
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {buildingData.slice(0, 3).map((building, i) => (
+              <BuildingCard data={building} key={i} />
+            ))}
+          </div>
         </div>
       </section>
     </>

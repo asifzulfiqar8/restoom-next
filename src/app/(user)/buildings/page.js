@@ -1,7 +1,7 @@
-import React from "react";
+import AllBuildings from "@/components/user/buildings/AllBuildings";
 
 const Buildings = () => {
-  return <div>Buildings</div>;
+  return <AllBuildings />;
 };
 
 export default Buildings;
