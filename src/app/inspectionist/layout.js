@@ -1,4 +1,4 @@
-const UserLayout = ({ children }) => {
+const InspectionistLayout = ({ children }) => {
   return (
     <section className="bg-[#F5F2FF] w-screen h-screen grid place-items-center overflow-hidden">
       <section className="h-[calc(100vh-16px)] w-[calc(100vw-16px)] flex gap-4">
@@ -14,4 +14,4 @@ const UserLayout = ({ children }) => {
   );
 };
 
-export default UserLayout;
+export default InspectionistLayout;
