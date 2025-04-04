@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Layout = ({ title, secondTitle, children }) => {
   return (
-    <section className="w-full bg-[url('/images/default/restroom.jpg')] bg-black/40 bg-blend-overlay bg-cover bg-bottom bg-no-repeat h-full lg:h-screen">
+    <section className="w-full bg-[url('/images/default/restroom.jpg')] bg-black/50 bg-blend-overlay bg-cover bg-bottom bg-no-repeat h-full lg:h-screen">
       <section className="container mx-auto px-5 py-10 lg:py-[80px] grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-[60px] relative h-full overflow-auto scroll-0">
         {/* logo */}
         <Image

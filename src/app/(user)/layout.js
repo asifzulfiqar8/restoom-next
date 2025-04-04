@@ -8,7 +8,7 @@ const UserLayout = ({ children }) => {
         <Aside />
         <div className="flex-1">
           <Header />
-          <main className="h-[calc(100vh-197px)] overflow-y-scroll overflow-x-hidden scroll-0 py-4 rounded-lg">
+          <main className="h-[calc(100vh-197px)] overflow-y-scroll overflow-x-hidden scroll-0 pt-4 rounded-lg">
             {children}
           </main>
         </div>

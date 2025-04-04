@@ -5,9 +5,12 @@ import DashboardCard from "./DashboardCard";
 import { buildingData, dashboardCardsData, pieChartData } from "@/data/data";
 import CustomLineChart from "@/components/global/charts/CustomLineChart";
 import { BuildingIcon } from "@/assets/icon";
-import PieChartComponent from "@/components/global/charts/PieChartComponent";
 import Link from "next/link";
 import BuildingCard from "@/components/global/BuildingCard";
+const PieChartComponent = dynamic(
+  () => import("@/components/global/charts/PieChartComponent"),
+  { ssr: false }
+);
 const Map = dynamic(() => import("./Map"), { ssr: false });
 
 const Dashboard = () => {
