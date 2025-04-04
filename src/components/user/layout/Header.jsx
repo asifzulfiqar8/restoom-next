@@ -6,13 +6,25 @@ import { IoIosArrowForward } from "react-icons/io";
 import Notifications from "../Notifications";
 import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
+  const path = pathname.split("/").slice(-1)[0];
   const [profileActive, setProfileActive] = useState(false);
   const [notificationActive, setNotificationActive] = useState(false);
   const notificationRef = useRef();
   const profileRef = useRef();
   const isLoading = false;
+
+  const getPathName = (pathname) => {
+    switch (pathname) {
+      case "":
+        return "Dashboard";
+      default:
+        return pathname;
+    }
+  };
   const toggleDropDown = () => {
     setProfileActive(!profileActive);
     setNotificationActive(false);
@@ -27,59 +39,67 @@ const Header = () => {
     console.log("log out clicked");
   };
   return (
-    <header className="w-full h-[200px] bg-[#088d9cc5] rounded-xl bg-[url('/images/default/header-bg.png')] bg-no-repeat bg-cover bg-top bg-blend-overlay p-5 md:p-8 flex flex-col justify-between">
-      <div className="flex justify-end">
-        <div className="flex justify-end  items-center gap-4">
-          <button
-            className="bg-black h-[40px] w-[40px] flex justify-center items-center rounded-lg relative cursor-pointer"
-            onClick={handleNotification}
-            ref={notificationRef}
-          >
-            <FaRegBell color="white" />
-            <GoDotFill
-              color="#EB5757"
-              className="absolute right-[-4px] top-[-6px]"
-            />
-            {notificationActive && (
-              <div className="absolute top-[45px] right-[-60px] sm:right-0 bg-white drop-shadow-md rounded-lg w-[280px] h-[300px] border border-gray-300 z-[999999] overflow-y-auto no-scrollbar">
-                <Notifications />
-              </div>
-            )}
-          </button>
-          <div className="flex items-center gap-2 md:gap-4">
-            <img
-              src="/images/default/profile.png"
-              alt="profile-pic"
-              className="w-[40px] h-[40px] rounded-lg object-cover hidden md:inline-block cursor-pointer"
-              onClick={toggleDropDown}
-            />
-          </div>
-        </div>
-        {profileActive && (
-          <div className="absolute top-[85px] right-[39px] bg-white shadow-md rounded-lg w-[150px] z-10">
-            <Link
-              className="flex items-center justify-between px-3 py-2 border-b border-gray-200"
-              href={""}
-              onClick={() => setProfileActive(false)}
+    <header
+      className="relative w-full h-[180px] rounded-xl 
+  bg-[url('/images/default/header-bg.png')] bg-no-repeat bg-cover bg-top p-5 md:p-8"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-[#088d9c88] to-[#9550e48f] opacity-70 rounded-xl"></div>
+      <div className="relative z-50 h-full flex flex-col justify-between">
+        <div className="flex justify-end">
+          <div className="flex justify-end  items-center gap-4">
+            <button
+              className="bg-black h-[40px] w-[40px] flex justify-center items-center rounded-lg relative cursor-pointer"
+              onClick={handleNotification}
+              ref={notificationRef}
             >
-              Profile
-              <IoIosArrowForward />
-            </Link>
-            <div
-              className={`flex items-center justify-between px-3 py-2 cursor-pointer ${
-                isLoading ? "cursor-none pointer-events-none opacity-50" : ""
-              }`}
-              onClick={logoutHandler}
-            >
-              Logout
-              <IoIosLogOut />
+              <FaRegBell color="white" />
+              <GoDotFill
+                color="#EB5757"
+                className="absolute right-[-4px] top-[-6px]"
+              />
+              {notificationActive && (
+                <div className="absolute top-[45px] right-[-60px] sm:right-0 bg-white drop-shadow-md rounded-lg w-[280px] h-[300px] border border-gray-300 z-[999999] overflow-y-auto no-scrollbar">
+                  <Notifications />
+                </div>
+              )}
+            </button>
+            <div className="flex items-center gap-2 md:gap-4">
+              <img
+                src="/images/default/profile.png"
+                alt="profile-pic"
+                className="w-[40px] h-[40px] rounded-lg object-cover hidden md:inline-block cursor-pointer"
+                onClick={toggleDropDown}
+              />
+              {profileActive && (
+                <div className="absolute top-[46px] right-0 bg-white shadow-md rounded-lg w-[150px] z-10">
+                  <Link
+                    className="flex items-center justify-between px-3 py-2 border-b border-gray-200"
+                    href={""}
+                    onClick={() => setProfileActive(false)}
+                  >
+                    Profile
+                    <IoIosArrowForward />
+                  </Link>
+                  <div
+                    className={`flex items-center justify-between px-3 py-2 cursor-pointer ${
+                      isLoading
+                        ? "cursor-none pointer-events-none opacity-50"
+                        : ""
+                    }`}
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                    <IoIosLogOut />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
+        <h3 className="text-lg lg:text-[34px] font-semibold text-white leading-none capitalize">
+          {getPathName(path)}
+        </h3>
       </div>
-      <h3 className="text-lg lg:text-[34px] font-semibold text-white leading-none">
-        Dashboard
-      </h3>
     </header>
   );
 };
