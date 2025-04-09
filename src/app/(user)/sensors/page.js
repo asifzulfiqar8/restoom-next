@@ -1,5 +1,7 @@
-const Sensors = () => {
-  return <div>Sensors</div>;
+import Sensors from "@/components/user/sensors/Sensors";
+
+const SensorPage = () => {
+  return <Sensors />;
 };
 
-export default Sensors;
+export default SensorPage;

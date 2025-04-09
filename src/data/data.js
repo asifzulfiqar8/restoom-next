@@ -1,3 +1,28 @@
+const tableStyles = {
+  headCells: {
+    style: {
+      fontSize: "16px",
+      fontWeight: 600,
+      color: "rgba(17, 17, 17, 1)",
+    },
+  },
+  rows: {
+    style: {
+      background: "#ECE8FF",
+      borderRadius: "6px",
+      padding: "14px 0",
+      margin: "10px 0",
+      borderBottomWidth: "0 !important",
+    },
+  },
+  cells: {
+    style: {
+      color: "rgba(17, 17, 17, 1)",
+      fontSize: "14px",
+    },
+  },
+};
+
 const dashboardCardsData = [
   {
     title: "Total Buildings",
@@ -86,4 +111,40 @@ const buildingData = [
   },
 ];
 
-export { dashboardCardsData, pieChartData, buildingData };
+const initialSensorsData = [
+  {
+    _id: "1",
+    name: "Pressure Sensor",
+    ip: "255.255.255.255",
+    port: "2093",
+    type: "Pressure",
+    uniqueId: "123456789",
+    status: "connected",
+  },
+  {
+    _id: "2",
+    name: "Temperature Sensor",
+    ip: "192.168.1.10",
+    port: "3001",
+    type: "Temperature",
+    uniqueId: "987654321",
+    status: "disconnected",
+  },
+  {
+    _id: "3",
+    name: "Humidity Sensor",
+    ip: "10.0.0.5",
+    port: "8080",
+    type: "Humidity",
+    uniqueId: "1122334455",
+    status: "connected",
+  },
+];
+
+export {
+  dashboardCardsData,
+  pieChartData,
+  buildingData,
+  tableStyles,
+  initialSensorsData,
+};
