@@ -11,6 +11,7 @@ import { useState } from "react";
 import Modal from "@/components/global/Modal";
 import AddSensor from "./AddSensor";
 import EditSensor from "./EditSensor";
+import Button from "@/components/global/small/Button";
 
 const Sensors = () => {
   const [sensorsData, setSensorsData] = useState(initialSensorsData);
@@ -55,6 +56,27 @@ const Sensors = () => {
       {modalType === "edit" && (
         <Modal onClose={modalCloseHandler} title={"Edit Sensor"}>
           <EditSensor onClose={modalCloseHandler} />
+        </Modal>
+      )}
+      {modalType === "delete" && (
+        <Modal
+          onClose={modalCloseHandler}
+          title={"Confirmation"}
+          width="w-[300px] md:w-[600px]"
+        >
+          <div>
+            <p className="text-[16px] text-[#00000090]">
+              Are you sure you want to delete this sensor?
+            </p>
+            <div className="flex items-center justify-end gap-4 mt-5">
+              <Button
+                onClick={modalCloseHandler}
+                text="Cancel"
+                cn="border-primary bg-transparent !text-primary"
+              />
+              <Button text="Delete Sensor" />
+            </div>
+          </div>
         </Modal>
       )}
     </section>

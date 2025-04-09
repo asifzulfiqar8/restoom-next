@@ -102,7 +102,7 @@ const EditSensor = ({ onClose }) => {
           text="Cancel"
           cn="border-primary bg-transparent !text-primary"
         />
-        <Button text="Add Sensor" />
+        <Button text="Save Sensor" />
       </div>
     </form>
   );
