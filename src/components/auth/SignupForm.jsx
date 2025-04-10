@@ -5,9 +5,16 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Input from "../global/small/Input";
 import Button from "../global/small/Button";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { useRegisterMutation } from "@/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
-  // State for form inputs
+  const [register, { isLoading }] = useRegisterMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,17 +22,14 @@ const SignupForm = () => {
     confirmPassword: "",
   });
 
-  // State for password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Check if form is valid (simple validation)
   const isFormValid =
     formData.fullName.trim() !== "" &&
     formData.email.trim() !== "" &&
@@ -33,13 +37,27 @@ const SignupForm = () => {
     formData.confirmPassword.trim() !== "" &&
     formData.password === formData.confirmPassword;
 
-  // Handle form submission
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
-    if (!isFormValid) return;
+    if (!isFormValid) return toast.error("Please fill all fields correctly");
 
-    console.log("Form Submitted", formData);
-    // API call or action for signup
+    try {
+      const res = await register(formData).unwrap();
+      if (res?.success) {
+        const { data } = res;
+        dispatch(
+          setUser({
+            user: data?.user,
+            role: data?.user?.role,
+          })
+        );
+        console.log("res", data);
+        toast.success(res?.message || "User registered successfully");
+        router.push("/");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message || "Something went wrong");
+    }
   };
 
   return (
@@ -120,7 +138,12 @@ const SignupForm = () => {
             )}
           </div>
         </div>
-        <Button text="Sign up" type="submit" />
+        <Button
+          text="Sign up"
+          type="submit"
+          disabled={isLoading}
+          cn={`${isLoading && "opacity-60 cursor-not-allowed"}`}
+        />
         <div className="text-sm lg:text-base text-[#666666]">
           Already have an Account?{" "}
           <Link href="/login" className="text-primary font-semibold">

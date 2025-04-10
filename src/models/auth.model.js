@@ -37,6 +37,10 @@ const authSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+authSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
 authSchema.pre("save", async function (next) {
   const user = this;
   if (!user.isModified("password")) return next();
@@ -51,8 +55,4 @@ authSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.methods.comparePassword = async function (password) {
-  return bcrypt.compare(password, this.password);
-};
-
-export const Auth = mongoose.models("Auth", authSchema);
+export const Auth = mongoose.models.Auth || mongoose.model("Auth", authSchema);

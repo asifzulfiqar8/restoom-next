@@ -1,6 +1,8 @@
+import { StoreProvider } from "@/store";
+import "leaflet/dist/leaflet.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "leaflet/dist/leaflet.css";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +26,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main>{children}</main>
+        <Toaster position="top-right" />
+        <StoreProvider>
+          <main>{children}</main>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -5,8 +5,16 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Input from "../global/small/Input";
 import Button from "../global/small/Button";
 import Link from "next/link";
+import { useLoginMutation } from "@/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { setUser } from "@/features/auth/authSlice";
 
 const LoginForm = () => {
+  const [login, { isLoading, isError }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,10 +29,30 @@ const LoginForm = () => {
   };
 
   // Handle form submission
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
-    console.log("Login Form Submitted", formData);
-    // API call or authentication logic here
+
+    if (!formData.email || !formData.password)
+      return toast.error("Please provide email and password");
+
+    try {
+      const res = await login(formData).unwrap();
+      if (res?.success) {
+        const { data } = res;
+        dispatch(
+          setUser({
+            user: data?.user,
+            role: data?.user?.role,
+          })
+        );
+        toast.success(res?.message || "User logged in successfully");
+        router.push("/");
+      }
+    } catch (error) {
+      if (isError) {
+        toast.error(error?.data?.message || "Something went wrong");
+      }
+    }
   };
 
   return (
@@ -61,7 +89,12 @@ const LoginForm = () => {
             {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
           </div>
         </div>
-        <Button text="Login" type="submit" />
+        <Button
+          text="Login"
+          type="submit"
+          disabled={isLoading}
+          cn={`${isLoading && "opacity-60 cursor-not-allowed"}`}
+        />
         <div className="text-sm lg:text-base text-[#666666]">
           Don’t have an account?{" "}
           <Link href="/signup" className="text-primary font-semibold">
