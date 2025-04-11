@@ -6,7 +6,7 @@ import { customError } from "@/utils/customError";
 import { cookies } from "next/headers";
 
 export const isAuthenticated = async () => {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   const accessToken = cookieStore.get(getEnv("ACCESS_TOKEN_NAME"))?.value;
   const refreshToken = cookieStore.get(getEnv("REFRESH_TOKEN_NAME"))?.value;
