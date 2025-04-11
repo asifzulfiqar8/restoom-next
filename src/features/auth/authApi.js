@@ -4,29 +4,32 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: getEnv("NEXT_PUBLIC_API_BASE_URL"),
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-      if (token) headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
+    baseUrl: `${getEnv("NEXT_PUBLIC_API_BASE_URL")}/auth`,
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({
-        url: "/auth/register",
+        url: "/register",
         method: "POST",
         body: data,
       }),
     }),
     login: builder.mutation({
       query: (data) => ({
-        url: "/auth/login",
+        url: "/login",
         method: "POST",
         body: data,
+      }),
+    }),
+    getProfile: builder.query({
+      query: () => ({
+        url: "/get-profile",
+        method: "GET",
       }),
     }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGetProfileQuery } =
+  authApi;

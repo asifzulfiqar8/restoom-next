@@ -17,16 +17,22 @@ export const JWTService = () => ({
 
   async verifyAccessToken(token) {
     try {
-      return jwt.verify(token, getEnv("ACCESS_TOKEN_SECRET"));
-    } catch {
+      const decoded = jwt.verify(token, getEnv("ACCESS_TOKEN_SECRET"));
+      console.log("✅ Decoded access token:", decoded);
+      return decoded;
+    } catch (error) {
+      console.error("❌ verifyAccessToken error:", error.name, error.message);
       return null;
     }
   },
 
   async verifyRefreshToken(token) {
     try {
-      return jwt.verify(token, getEnv("REFRESH_TOKEN_SECRET"));
-    } catch {
+      const decoded = jwt.verify(token, getEnv("REFRESH_TOKEN_SECRET"));
+      console.log("✅ Decoded refresh token:", decoded);
+      return decoded;
+    } catch (error) {
+      console.error("❌ verifyRefreshToken error:", error.name, error.message);
       return null;
     }
   },
