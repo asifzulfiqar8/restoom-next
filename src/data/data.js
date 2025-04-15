@@ -141,10 +141,67 @@ const initialSensorsData = [
   },
 ];
 
+const planCardsData = [
+  {
+    title: "Starter",
+    subtitle: "Basic Builder",
+    price: "29",
+    type: "monthly",
+    featuresList: [
+      "Manage up to 3 buildings",
+      "Connect up to 10 sensors",
+      "Basic real-time monitoring",
+      "Standard reporting tools",
+      "Email support",
+    ],
+    description:
+      "Start with the essentials. Ideal for small teams or single buildings, this plan provides the foundational tools to get your smart building up and running efficiently",
+    bg: "#B2FFB0",
+    btnBg: "#008B26",
+  },
+  {
+    title: "Standard",
+    subtitle: "Pro Manager",
+
+    price: "39",
+    type: "yearly",
+    featuresList: [
+      "Manage up to 3 buildings",
+      "Connect up to 10 sensors",
+      "Basic real-time monitoring",
+      "Standard reporting tools",
+      "Email support",
+    ],
+    description:
+      "Start with the essentials. Ideal for small teams or single buildings, this plan provides the foundational tools to get your smart building up and running efficiently",
+    bg: "#81CEFF",
+    btnBg: "#0067A9",
+  },
+  {
+    title: "Premium",
+    subtitle: "Basic Plan",
+
+    price: "49",
+    type: "lifetime",
+    featuresList: [
+      "Manage up to 3 buildings",
+      "Connect up to 10 sensors",
+      "Basic real-time monitoring",
+      "Standard reporting tools",
+      "Email support",
+    ],
+    description:
+      "Start with the essentials. Ideal for small teams or single buildings, this plan provides the foundational tools to get your smart building up and running efficiently",
+    bg: "#FFCF87",
+    btnBg: "#F2AC44",
+  },
+];
+
 export {
   dashboardCardsData,
   pieChartData,
   buildingData,
   tableStyles,
   initialSensorsData,
+  planCardsData,
 };

@@ -1,5 +1,7 @@
-const Plans = () => {
-  return <div>Plans</div>;
+import Plans from "@/components/user/plans/Plans";
+
+const PlansPage = () => {
+  return <Plans />;
 };
 
-export default Plans;
+export default PlansPage;
