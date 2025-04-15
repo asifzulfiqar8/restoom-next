@@ -20,7 +20,7 @@ const Plans = () => {
           return (
             <button
               key={tab}
-              className={`text-base font-medium px-5 py-3 rounded-md transition-all duration-150 ${
+              className={`text-base font-semibold px-5 py-3 rounded-md transition-all duration-150 ${
                 isActiveTab === tab
                   ? "bg-primary text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-100"
