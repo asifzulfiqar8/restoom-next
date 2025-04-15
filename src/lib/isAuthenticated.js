@@ -25,7 +25,7 @@ export const isAuthenticated = async () => {
     user = await Auth.findById(decoded._id);
     if (!user) throw new customError(401, "Please Login First");
 
-    // ✅ Issue new access token
+    // Issue new access token
     const newAccessToken = await JWTService().accessToken(user._id);
     if (!newAccessToken)
       throw new customError(400, "Error While Generating Access Token");

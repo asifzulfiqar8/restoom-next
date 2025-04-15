@@ -6,16 +6,22 @@ import { IoIosArrowForward } from "react-icons/io";
 import Notifications from "../Notifications";
 import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useLogoutMutation } from "@/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "@/features/auth/authSlice";
+import toast from "react-hot-toast";
 
 const Header = () => {
+  const [logout, { isLoading, isSuccess, isError }] = useLogoutMutation();
+  const router = useRouter();
+  const dispatch = useDispatch();
   const pathname = usePathname();
   const path = pathname.split("/").slice(-1)[0];
   const [profileActive, setProfileActive] = useState(false);
   const [notificationActive, setNotificationActive] = useState(false);
   const notificationRef = useRef();
   const profileRef = useRef();
-  const isLoading = false;
 
   const getPathName = (pathname) => {
     switch (pathname) {
@@ -36,8 +42,25 @@ const Header = () => {
   };
 
   const logoutHandler = async () => {
-    console.log("log out clicked");
+    try {
+      const res = await logout().unwrap();
+
+      dispatch(deleteUser());
+
+      if (res?.success) {
+        toast.success(res?.message || "Logout successfully");
+      } else {
+        toast.warning("Session ended but no success flag from server");
+      }
+
+      router.push("/login");
+    } catch (error) {
+      dispatch(deleteUser());
+      toast.error(error?.data?.message || "Something went wrong");
+      router.push("/login");
+    }
   };
+
   return (
     <header
       className="relative w-full h-[180px] rounded-xl 
