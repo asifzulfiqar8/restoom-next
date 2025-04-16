@@ -7,7 +7,7 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: "John Doe",
     bio: "A passionate developer and tech enthusiast.",
-    picture: "https://via.placeholder.com/150",
+    picture: "/images/default/profile.png",
     email: "john.doe@example.com",
     phone: "123-456-7890",
     dob: "1990-01-01",
@@ -52,8 +52,8 @@ const Profile = () => {
   );
 
   return (
-    <div className="bg-gray-100 p-4 flex justify-center">
-      <div className="w-full bg-white shadow rounded-lg p-6">
+    <div className="flex justify-center">
+      <div className="w-full bg-white shadow rounded-xl p-6">
         <div className="flex flex-col items-center">
           <img
             src={profile.picture}
@@ -169,7 +169,7 @@ const Profile = () => {
             onClick={handleToggleEdit}
             width="max-w-[130px]"
             text={isEditing ? "Save" : "Edit Profile"}
-          ></Button>
+          />
         </div>
       </div>
     </div>
