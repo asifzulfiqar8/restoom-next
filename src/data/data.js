@@ -62,6 +62,7 @@ const pieChartData = [
 
 const buildingData = [
   {
+    id: "1",
     title: "Arfa Tower",
     location: "Ryad, Saudi Arabia",
     image: "/images/dashboard/building-one.png",
@@ -70,6 +71,7 @@ const buildingData = [
     buildingType: "Public",
   },
   {
+    id: "12",
     title: "Bahrain Plaza",
     location: "Downtown, Manama, Bahrain",
     image: "/images/dashboard/building-two.png",
@@ -78,6 +80,7 @@ const buildingData = [
     buildingType: "Commercial",
   },
   {
+    id: "23",
     title: "Dubai Heights",
     location: "Business Bay, Dubai, UAE",
     image: "/images/dashboard/building-three.png",
@@ -86,6 +89,7 @@ const buildingData = [
     buildingType: "Private",
   },
   {
+    id: "34",
     title: "Kuwait Residency",
     location: "Salmiya, Kuwait",
     image: "/images/dashboard/building-one.png",
@@ -94,6 +98,7 @@ const buildingData = [
     buildingType: "Private",
   },
   {
+    id: "54",
     title: "Qatar Hub",
     location: "West Bay, Doha, Qatar",
     image: "/images/dashboard/building-two.png",
@@ -102,6 +107,7 @@ const buildingData = [
     buildingType: "Commercial",
   },
   {
+    id: "56",
     title: "Oman Oasis",
     location: "Muscat, Oman",
     image: "/images/dashboard/building-three.png",
