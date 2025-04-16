@@ -1,12 +1,12 @@
 "use client";
 import Button from "@/components/global/small/Button";
+import Input from "@/components/global/small/Input";
 import { useState } from "react";
 
 const Profile = () => {
   // Initial profile state (replace defaults as needed)
   const [profile, setProfile] = useState({
     name: "John Doe",
-    bio: "A passionate developer and tech enthusiast.",
     picture: "/images/default/profile.png",
     email: "john.doe@example.com",
     phone: "123-456-7890",
@@ -61,98 +61,50 @@ const Profile = () => {
             className="w-32 h-32 rounded-full mb-4 object-cover shadow"
           />
           <h2 className="text-2xl font-bold mb-2">{profile.name}</h2>
-          {!isEditing && (
-            <p className="text-gray-600 text-center">{profile.bio}</p>
-          )}
         </div>
 
         <div className="mt-6">
           {isEditing ? (
             <form className="space-y-4">
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Bio
-                </label>
-                <textarea
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  rows="3"
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                ></textarea>
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Profile Picture URL
-                </label>
-                <input
-                  type="text"
-                  name="picture"
-                  value={formData.picture}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Nationality
-                </label>
-                <input
-                  type="text"
-                  name="nationality"
-                  value={formData.nationality}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
-                />
-              </div>
+              <Input
+                label="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+              <Input
+                label="Profile Picture URL"
+                name="picture"
+                value={formData.picture}
+                onChange={handleChange}
+              />
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <Input
+                label="Phone Number"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <Input
+                label="Date of Birth"
+                name="dob"
+                type="date"
+                value={formData.dob}
+                onChange={handleChange}
+              />
+              <Input
+                label="Nationality"
+                name="nationality"
+                value={formData.nationality}
+                onChange={handleChange}
+              />
             </form>
           ) : (
             <div className="space-y-4">

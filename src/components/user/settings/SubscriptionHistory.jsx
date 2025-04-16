@@ -4,7 +4,7 @@ import { AiOutlineDownload } from "react-icons/ai";
 
 const SubscriptionHistory = () => {
   return (
-    <div className="bg-white rounded-xl p-4 lg:p-6">
+    <div>
       <DataTable
         columns={columns}
         data={subscriptionHistoryData}
