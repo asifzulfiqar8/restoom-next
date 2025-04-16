@@ -1,5 +1,7 @@
+import BuildingDetail from "@/components/user/buildings/BuildingDetail";
+
 const BuildingDetailsPage = () => {
-  return <div>BuildingDetailsPage</div>;
+  return <BuildingDetail />;
 };
 
 export default BuildingDetailsPage;

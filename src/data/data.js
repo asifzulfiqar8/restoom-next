@@ -254,6 +254,29 @@ const subscriptionHistoryData = [
   },
 ];
 
+const queueingStatusData = [
+  {
+    title: "Total Restrooms",
+    value: "12",
+  },
+  {
+    title: "Occupied Restrooms",
+    value: "08",
+  },
+  {
+    title: "Vacant Restrooms",
+    value: "03",
+  },
+  {
+    title: "Peoples In Queue",
+    value: "12",
+  },
+  {
+    title: "Flow Count",
+    value: "2 IN  &  1 OUT",
+  },
+];
+
 export {
   dashboardCardsData,
   pieChartData,
@@ -262,4 +285,5 @@ export {
   initialSensorsData,
   planCardsData,
   subscriptionHistoryData,
+  queueingStatusData,
 };
