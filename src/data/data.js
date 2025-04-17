@@ -277,6 +277,138 @@ const queueingStatusData = [
   },
 ];
 
+const infoCardsData = [
+  {
+    title: "Total Floors",
+    count: 2,
+    icon: "/svgs/user/green-step.svg",
+    borderColor: "border-[#078E9B]",
+    hoverColor: "hover:bg-[#078E9B15]",
+  },
+  {
+    title: "Total Restrooms",
+    count: 5,
+    icon: "/svgs/user/purple-restroom.svg",
+    borderColor: "border-[#A449EB]",
+    hoverColor: "hover:bg-[#A449EB15]",
+  },
+  {
+    title: "Restrooms In Use",
+    count: 135,
+    icon: "/svgs/user/yellow-toilet.svg",
+    borderColor: "border-[#FF9500]",
+    hoverColor: "hover:bg-[#FF950015]",
+  },
+  {
+    title: "Total Sensors",
+    count: 9,
+    icon: "/svgs/user/pink-buzzer.svg",
+    borderColor: "border-[#FF4D85]",
+    hoverColor: "hover:bg-[#FF4D8515]",
+  },
+];
+
+const activityChartData = [
+  { name: "", floor1: 100, floor2: 2400, floor3: 2400 },
+  { name: "5 May", floor1: 200, floor2: 1398, floor3: 4010 },
+  { name: "6 May", floor1: 1800, floor2: 1800, floor3: 2290 },
+  { name: "7 May", floor1: 680, floor2: 3908, floor3: 2500 },
+  { name: "8 May", floor1: 1890, floor2: 4500, floor3: 2181 },
+  { name: "9 May", floor1: 1890, floor2: 2400, floor3: 2181 },
+  { name: "10 May", floor1: 1890, floor2: 4000, floor3: 2181 },
+  { name: "11 May", floor1: 1890, floor2: 1400, floor3: 2981 },
+  { name: "12 May", floor1: 1890, floor2: 5500, floor3: 1181 },
+  { name: "13 May", floor1: 490, floor2: 3800, floor3: 500 },
+  { name: "14 May", floor1: 1500, floor2: 2900, floor3: 2700 },
+  { name: "15 May", floor1: 1200, floor2: 3100, floor3: 2300 },
+  { name: "16 May", floor1: 2000, floor2: 2000, floor3: 4000 },
+  { name: "17 May", floor1: 950, floor2: 1500, floor3: 1800 },
+  { name: "18 May", floor1: 2100, floor2: 4500, floor3: 3500 },
+  { name: "19 May", floor1: 1700, floor2: 3800, floor3: 2900 },
+  { name: "20 May", floor1: 2500, floor2: 3100, floor3: 2200 },
+];
+
+const lineChartData = [
+  { day: 1, value: 15 },
+  { day: 2, value: 28 },
+  { day: 3, value: 40 },
+  { day: 4, value: 32 },
+  { day: 5, value: 45 },
+  { day: 6, value: 35 },
+  { day: 7, value: 25 },
+  { day: 8, value: 39 },
+  { day: 9, value: 41 },
+  { day: 10, value: 30 },
+  { day: 11, value: 22 },
+  { day: 12, value: 38 },
+  { day: 13, value: 42 },
+  { day: 14, value: 43 },
+  { day: 15, value: 44 },
+  { day: 16, value: 29 },
+  { day: 17, value: 28 },
+  { day: 18, value: 20 },
+  { day: 19, value: 15 },
+  { day: 20, value: 18 },
+  { day: 21, value: 21 },
+  { day: 22, value: 27 },
+  { day: 23, value: 35 },
+  { day: 24, value: 30 },
+  { day: 25, value: 25 },
+  { day: 26, value: 17 },
+  { day: 27, value: 12 },
+  { day: 28, value: 15 },
+  { day: 29, value: 20 },
+  { day: 30, value: 18 },
+];
+
+const mostUsedRoomsList = [
+  {
+    room: "Restroom 5",
+    floor: "Floor 7",
+    used: "70%",
+  },
+  {
+    room: "Restroom 3",
+    floor: "Floor 2",
+    used: "30%",
+  },
+  {
+    room: "Restroom 1",
+    floor: "Floor 9",
+    used: "60%",
+  },
+  {
+    room: "Conference Room A",
+    floor: "Floor 1",
+    used: "85%",
+  },
+  {
+    room: "Lobby Lounge",
+    floor: "Ground Floor",
+    used: "90%",
+  },
+  {
+    room: "Pantry Area",
+    floor: "Floor 3",
+    used: "45%",
+  },
+  {
+    room: "Meeting Room 2",
+    floor: "Floor 5",
+    used: "55%",
+  },
+  {
+    room: "Restroom 7",
+    floor: "Floor 4",
+    used: "65%",
+  },
+  {
+    room: "Executive Lounge",
+    floor: "Floor 10",
+    used: "75%",
+  },
+];
+
 export {
   dashboardCardsData,
   pieChartData,
@@ -286,4 +418,8 @@ export {
   planCardsData,
   subscriptionHistoryData,
   queueingStatusData,
+  infoCardsData,
+  activityChartData,
+  lineChartData,
+  mostUsedRoomsList,
 };

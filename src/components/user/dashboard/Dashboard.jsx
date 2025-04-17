@@ -2,7 +2,12 @@
 import dynamic from "next/dynamic";
 import Alerts from "./Alerts";
 import DashboardCard from "./DashboardCard";
-import { buildingData, dashboardCardsData, pieChartData } from "@/data/data";
+import {
+  buildingData,
+  dashboardCardsData,
+  lineChartData,
+  pieChartData,
+} from "@/data/data";
 import CustomLineChart from "@/components/global/charts/CustomLineChart";
 import { BuildingIcon } from "@/assets/icon";
 import Link from "next/link";
@@ -32,7 +37,7 @@ const Dashboard = () => {
           <h6 className="text-base md:text-xl font-semibold text-black mb-5">
             Overall Performance
           </h6>
-          <CustomLineChart />
+          <CustomLineChart data={lineChartData} xaxis yaxis />
         </div>
         <div className="xl:col-span-4 rounded-2xl bg-white p-4 md:p-5 shadow-md flex flex-col justify-around">
           <h6 className="text-base md:text-xl font-medium text-black mb-5 flex items-center gap-1">

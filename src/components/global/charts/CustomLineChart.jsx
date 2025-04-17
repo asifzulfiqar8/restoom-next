@@ -11,40 +11,6 @@ import {
 } from "recharts";
 import { AiOutlineArrowUp } from "react-icons/ai";
 
-// Dummy data
-const data = [
-  { day: 1, value: 15 },
-  { day: 2, value: 28 },
-  { day: 3, value: 40 },
-  { day: 4, value: 32 },
-  { day: 5, value: 45 },
-  { day: 6, value: 35 },
-  { day: 7, value: 25 },
-  { day: 8, value: 39 },
-  { day: 9, value: 41 },
-  { day: 10, value: 30 },
-  { day: 11, value: 22 },
-  { day: 12, value: 38 },
-  { day: 13, value: 42 },
-  { day: 14, value: 43 },
-  { day: 15, value: 44 },
-  { day: 16, value: 29 },
-  { day: 17, value: 28 },
-  { day: 18, value: 20 },
-  { day: 19, value: 15 },
-  { day: 20, value: 18 },
-  { day: 21, value: 21 },
-  { day: 22, value: 27 },
-  { day: 23, value: 35 },
-  { day: 24, value: 30 },
-  { day: 25, value: 25 },
-  { day: 26, value: 17 },
-  { day: 27, value: 12 },
-  { day: 28, value: 15 },
-  { day: 29, value: 20 },
-  { day: 30, value: 18 },
-];
-
 // Custom Tooltip Component
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload || payload.length === 0) return null;
@@ -61,31 +27,39 @@ function CustomTooltip({ active, payload, label }) {
   );
 }
 
-export default function CustomAreaChart() {
+export default function CustomAreaChart({
+  type = "monotone",
+  height = 300,
+  data,
+  xaxis,
+  yaxis,
+}) {
   return (
     <div className="w-full">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={height}>
         <AreaChart
           data={data}
           margin={{ top: 20, right: 0, left: -25, bottom: 0 }}
         >
           <CartesianGrid vertical={false} stroke="#f0f0f0" />
+          {xaxis && (
+            <XAxis
+              dataKey="day"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: "#888" }}
+            />
+          )}
 
-          <XAxis
-            dataKey="day"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fontSize: 12, fill: "#888" }}
-          />
-
-          {/* Set Y-Axis domain from 10 to 50 (adjust as needed) */}
-          <YAxis
-            domain={[10, 50]}
-            axisLine={false}
-            tickLine={false}
-            tick={{ fontSize: 12, fill: "#888" }}
-            tickFormatter={(val) => `${val}%`}
-          />
+          {yaxis && (
+            <YAxis
+              domain={[10, 50]}
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: "#888" }}
+              tickFormatter={(val) => `${val}%`}
+            />
+          )}
 
           <Tooltip
             content={<CustomTooltip />}
@@ -106,7 +80,7 @@ export default function CustomAreaChart() {
           </defs>
 
           <Area
-            type="monotone"
+            type={type}
             dataKey="value"
             stroke="url(#lineGradient)"
             strokeWidth={2}
