@@ -409,6 +409,36 @@ const mostUsedRoomsList = [
   },
 ];
 
+const floorListData = [
+  {
+    id: 1,
+    floorName: "Floor | 1",
+    image: "/images/dashboard/building-one.png",
+    totalRestrooms: "10",
+    occupiedRestrooms: "5",
+    freeRestrooms: "5",
+    activeSensors: "8",
+  },
+  {
+    id: 2,
+    floorName: "Floor | 2",
+    image: "/images/dashboard/building-two.png",
+    totalRestrooms: "12",
+    occupiedRestrooms: "6",
+    freeRestrooms: "6",
+    activeSensors: "10",
+  },
+  {
+    id: 3,
+    floorName: "Floor | 3",
+    image: "/images/dashboard/building-three.png",
+    totalRestrooms: "8",
+    occupiedRestrooms: "3",
+    freeRestrooms: "5",
+    activeSensors: "6",
+  },
+];
+
 export {
   dashboardCardsData,
   pieChartData,
@@ -422,4 +452,5 @@ export {
   activityChartData,
   lineChartData,
   mostUsedRoomsList,
+  floorListData,
 };
