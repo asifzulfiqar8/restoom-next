@@ -1,5 +1,7 @@
+import Floor from "@/components/user/buildings/Floor";
+
 const FloorPage = () => {
-  return <div>FloorPage</div>;
+  return <Floor />;
 };
 
 export default FloorPage;
