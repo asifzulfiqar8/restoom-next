@@ -14,8 +14,6 @@ const sensorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    url: { type: String, required: true },
-    port: { type: Number, required: true },
     uniqueId: { type: String, required: true },
     isConnected: { type: Boolean, required: true, default: false },
     status: { type: Boolean, required: true, default: true },
@@ -23,4 +21,5 @@ const sensorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Sensor = mongoose.model("Sensor", sensorSchema);
+export const Sensor =
+  mongoose.models.Sensor || mongoose.model("Sensor", sensorSchema);

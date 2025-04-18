@@ -18,7 +18,7 @@ export const isAuthenticated = async () => {
 
   if (!decoded) {
     // ⏳ Access token expired or invalid, try refresh token
-    // console.log("🔁 Access token expired, trying refresh token...");
+    // console.log("Access token expired, trying refresh token...");
     decoded = await JWTService().verifyRefreshToken(refreshToken);
     if (!decoded) throw new customError(401, "Please Login First");
 
