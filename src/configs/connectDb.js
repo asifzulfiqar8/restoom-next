@@ -1,37 +1,22 @@
 import mongoose from "mongoose";
 import { getEnv } from "./config";
 
-const MONGODB_URI = getEnv("MONGODB_URL");
-
-if (!MONGODB_URI) {
-  throw new Error("⚠️ MONGODB_URL is not defined");
-}
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
+let isConnected = false;
 export async function connectDb() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        dbName: "your_db_name", // optional
-        bufferCommands: false,
-      })
-      .then((mongoose) => {
-        console.log("✅ MongoDB connected");
-        return mongoose;
-      })
-      .catch((err) => {
-        console.error("❌ MongoDB connection error:", err);
-        throw err;
-      });
+  if (isConnected) {
+    console.log(`MongoDB is already connected`, isConnected);
+    return;
   }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
+  try {
+    const connection = await mongoose.connect(getEnv("MONGODB_URL"));
+    isConnected = connection.connections[0].readyState === 1;
+    console.log(`MongoDB connected successfully`, isConnected);
+    connection.connection.on("error", (error) =>
+      console.log("Error in connection to database", error)
+    );
+  } catch (error) {
+    console.log("Connection failed", error);
+    console.error("Error in connection to database", error);
+  }
 }
