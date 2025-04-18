@@ -30,7 +30,7 @@ const InspectionistLayout = ({ children }) => {
       return;
     }
 
-    if (user && user.role !== "admin") {
+    if (user && user.role !== "inspectionist") {
       const route = getRoleBaseRoute(user.role);
       if (pathname !== route) {
         toast.error("You are not authorized to access this page");
@@ -39,7 +39,8 @@ const InspectionistLayout = ({ children }) => {
     }
   }, [user, isAuthenticated, pathname, router]);
 
-  if (!isAuthenticated || !user || user.role !== "admin") return <Loader />;
+  if (!isAuthenticated || !user || user.role !== "inspectionist")
+    return <Loader />;
 
   return (
     <section className="bg-[#F5F2FF] w-screen h-screen grid place-items-center overflow-hidden">
