@@ -2,15 +2,14 @@
 import { useState } from "react";
 import Input from "@/components/global/small/Input";
 import Button from "@/components/global/small/Button";
+import { useCreateSensorMutation } from "@/features/sensor/sensorApi";
+import toast from "react-hot-toast";
 
 const AddSensor = ({ onClose }) => {
+  const [createSensor, { isLoading, isSuccess }] = useCreateSensorMutation();
   const [formData, setFormData] = useState({
     name: "",
     type: "",
-    ip: "",
-    url: "",
-    port: "",
-    location: "",
     uniqueId: "",
   });
 
@@ -22,9 +21,16 @@ const AddSensor = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sensor Form Data:", formData);
+    try {
+      const res = await createSensor(formData).unwrap();
+      toast.success(res.messsage || "Sensor created successfully");
+      onClose();
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+      console.error("Error creating sensor:", error);
+    }
   };
 
   return (
@@ -50,42 +56,6 @@ const AddSensor = ({ onClose }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="IP Address"
-          name="ip"
-          placeholder="e.g. 192.168.1.1"
-          value={formData.ip}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Stream URL"
-          name="url"
-          placeholder="e.g. http://example.com/stream"
-          value={formData.url}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Port"
-          name="port"
-          placeholder="e.g. 8080"
-          value={formData.port}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Location"
-          name="location"
-          placeholder="e.g. Main Plant Area"
-          value={formData.location}
-          onChange={handleChange}
-        />
-      </div>
       <div className="lg:col-span-12">
         <Input
           label="Unique ID"
@@ -102,7 +72,10 @@ const AddSensor = ({ onClose }) => {
           text="Cancel"
           cn="border-primary bg-transparent !text-primary"
         />
-        <Button text="Add Sensor" />
+        <Button
+          text={isLoading ? "Adding..." : "Add Sensor"}
+          disabled={isLoading}
+        />
       </div>
     </form>
   );

@@ -1,31 +1,65 @@
 "use client";
-import { initialSensorsData, tableStyles } from "@/data/data";
-import DataTable from "react-data-table-component";
-import { IoIosAddCircle } from "react-icons/io";
-import { HiOutlineEye } from "react-icons/hi2";
-import { CiEdit } from "react-icons/ci";
-import { AiOutlineDelete } from "react-icons/ai";
-import Link from "next/link";
-import ToggleButton from "@/components/global/small/ToggleButton";
-import { useState } from "react";
+import Loader from "@/components/global/Loader";
 import Modal from "@/components/global/Modal";
+import Button from "@/components/global/small/Button";
+import ToggleButton from "@/components/global/small/ToggleButton";
+import { tableStyles } from "@/data/data";
+import {
+  useDeleteSensorMutation,
+  useGetAllSensorsQuery,
+  useUpdateSensorMutation,
+} from "@/features/sensor/sensorApi";
+import Link from "next/link";
+import { useState } from "react";
+import DataTable from "react-data-table-component";
+import toast from "react-hot-toast";
+import { AiOutlineDelete } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
+import { HiOutlineEye } from "react-icons/hi2";
+import { IoIosAddCircle } from "react-icons/io";
 import AddSensor from "./AddSensor";
 import EditSensor from "./EditSensor";
-import Button from "@/components/global/small/Button";
 
 const Sensors = () => {
-  const [sensorsData, setSensorsData] = useState(initialSensorsData);
   const [modalType, setModalType] = useState("");
-
-  const modalOpenHandler = (type, row) => setModalType(type);
-  const modalCloseHandler = (type) => setModalType("");
-  const handleStatusHandler = (index) => {
-    const updatedData = [...sensorsData];
-    const status = updatedData[index].status;
-    updatedData[index].status =
-      status === "connected" ? "disconnected" : "connected";
-    setSensorsData(updatedData);
+  const [selectedSensor, setSelectedSensor] = useState(null);
+  const { data, isLoading } = useGetAllSensorsQuery();
+  const [updateSensor] = useUpdateSensorMutation();
+  const [deleteSensor, { isLoading: deleteLoading }] =
+    useDeleteSensorMutation();
+  const modalOpenHandler = (type, sensor = null) => {
+    setModalType(type);
+    setSelectedSensor(sensor);
   };
+  const modalCloseHandler = (type) => setModalType("");
+
+  const deleteSensorHandler = async (sensorId) => {
+    try {
+      const res = await deleteSensor(sensorId).unwrap();
+      toast.success(res.message || "Sensor deleted successfully");
+
+      modalCloseHandler();
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+      console.error("Error deleting sensor:", error);
+      modalCloseHandler();
+    }
+  };
+  const handleStatusHandler = async (sensor) => {
+    const updatedStatus = !sensor.status;
+    try {
+      const res = await updateSensor({
+        sensorId: sensor._id,
+        data: { status: updatedStatus },
+      }).unwrap();
+      toast.success(res.message || "Sensor status updated successfully");
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+      console.error("Error updating sensor status:", error);
+    }
+  };
+
+  if (isLoading) return <Loader />;
 
   return (
     <section className="bg-white p-4 md:p-5 rounded-[10px]">
@@ -39,7 +73,7 @@ const Sensors = () => {
       </div>
       <div className="mt-6">
         <DataTable
-          data={sensorsData}
+          data={data?.sensors || []}
           columns={tableColumns(handleStatusHandler, modalOpenHandler)}
           customStyles={tableStyles}
           pagination
@@ -55,7 +89,10 @@ const Sensors = () => {
       )}
       {modalType === "edit" && (
         <Modal onClose={modalCloseHandler} title={"Edit Sensor"}>
-          <EditSensor onClose={modalCloseHandler} />
+          <EditSensor
+            onClose={modalCloseHandler}
+            selectedSensor={selectedSensor}
+          />
         </Modal>
       )}
       {modalType === "delete" && (
@@ -74,7 +111,11 @@ const Sensors = () => {
                 text="Cancel"
                 cn="border-primary bg-transparent !text-primary"
               />
-              <Button text="Delete Sensor" />
+              <Button
+                onClick={() => deleteSensorHandler(selectedSensor?._id)}
+                text={deleteLoading ? "Deleting..." : "Delete Sensor"}
+                disabled={deleteLoading}
+              />
             </div>
           </div>
         </Modal>
@@ -91,14 +132,6 @@ const tableColumns = (handleStatusHandler, modalOpenHandler) => [
     selector: (row) => row?.name,
   },
   {
-    name: "IP",
-    selector: (row) => row?.ip,
-  },
-  {
-    name: "Port",
-    selector: (row) => row?.port,
-  },
-  {
     name: "Type",
     selector: (row) => row?.type,
   },
@@ -107,11 +140,20 @@ const tableColumns = (handleStatusHandler, modalOpenHandler) => [
     selector: (row) => row?.uniqueId,
   },
   {
+    name: "Is Connected",
+    selector: (row) =>
+      row?.isConnected === true ? (
+        <span>Connected</span>
+      ) : (
+        <span>Disconnected</span>
+      ),
+  },
+  {
     name: "Status",
-    cell: (row, index) => (
+    cell: (row) => (
       <ToggleButton
-        isChecked={row.status === "connected" ? true : false}
-        onToggle={() => handleStatusHandler(index)}
+        isChecked={row.status}
+        onToggle={() => handleStatusHandler(row)}
       />
     ),
   },

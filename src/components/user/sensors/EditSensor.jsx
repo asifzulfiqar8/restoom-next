@@ -2,16 +2,16 @@
 import { useState } from "react";
 import Input from "@/components/global/small/Input";
 import Button from "@/components/global/small/Button";
+import { useUpdateSensorMutation } from "@/features/sensor/sensorApi";
+import toast from "react-hot-toast";
 
-const EditSensor = ({ onClose }) => {
+const EditSensor = ({ onClose, selectedSensor }) => {
+  console.log("Selected Sensor:", selectedSensor);
+  const [updateSensor, { isLoading }] = useUpdateSensorMutation();
   const [formData, setFormData] = useState({
-    name: "",
-    type: "",
-    ip: "",
-    url: "",
-    port: "",
-    location: "",
-    uniqueId: "",
+    name: selectedSensor?.name || "",
+    type: selectedSensor?.type || "",
+    uniqueId: selectedSensor?.uniqueId || "",
   });
 
   const handleChange = (e) => {
@@ -22,9 +22,19 @@ const EditSensor = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sensor Form Data:", formData);
+    try {
+      const res = await updateSensor({
+        sensorId: selectedSensor._id,
+        data: formData,
+      }).unwrap();
+      toast.success(res.message || "Sensor updated successfully");
+      onClose();
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+      console.error("Error updating sensor:", error);
+    }
   };
 
   return (
@@ -50,42 +60,6 @@ const EditSensor = ({ onClose }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="IP Address"
-          name="ip"
-          placeholder="e.g. 192.168.1.1"
-          value={formData.ip}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Stream URL"
-          name="url"
-          placeholder="e.g. http://example.com/stream"
-          value={formData.url}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Port"
-          name="port"
-          placeholder="e.g. 8080"
-          value={formData.port}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="lg:col-span-6">
-        <Input
-          label="Location"
-          name="location"
-          placeholder="e.g. Main Plant Area"
-          value={formData.location}
-          onChange={handleChange}
-        />
-      </div>
       <div className="lg:col-span-12">
         <Input
           label="Unique ID"
@@ -102,7 +76,10 @@ const EditSensor = ({ onClose }) => {
           text="Cancel"
           cn="border-primary bg-transparent !text-primary"
         />
-        <Button text="Save Sensor" />
+        <Button
+          text={isLoading ? "Saving..." : "Save Sensor"}
+          disabled={isLoading}
+        />
       </div>
     </form>
   );

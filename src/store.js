@@ -3,14 +3,18 @@ const { configureStore } = require("@reduxjs/toolkit");
 const { authApi } = require("./features/auth/authApi");
 import { Provider } from "react-redux";
 import authReducer from "./features/auth/authSlice";
+import { sensorApi } from "./features/sensor/sensorApi";
 
 const store = configureStore({
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
     auth: authReducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [sensorApi.reducerPath]: sensorApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(sensorApi.middleware),
 });
 
 const StoreProvider = ({ children }) => {

@@ -26,37 +26,49 @@ export const GET = asyncHandler(async (req, { params }) => {
 
 export const PUT = asyncHandler(async (req, { params }) => {
   await connectDb();
+
   const user = await isAuthenticated();
   const ownerId = user._id;
   const { sensorId } = await params;
-  if (!isValidObjectId(sensorId))
-    throw new customError(400, "Invalid sensor id");
-  const body = await req.json();
-  const { name, type, uniqueId, status, isConnected } = body;
-  if (!name && !type && !uniqueId && !status && !isConnected)
-    throw new customError(400, "Please provide at least one field to update");
+
+  if (!isValidObjectId(sensorId)) {
+    throw new customError(400, "Invalid sensor ID");
+  }
 
   const sensor = await Sensor.findOne({ _id: sensorId, ownerId });
-  if (!sensor) throw new customError(400, "Sensor not found");
-  if (name) sensor.name = name;
-  if (type) sensor.type = type;
-  if (status) {
-    if (status === "true") sensor.status = true;
-    if (status === "false") sensor.status = false;
+  if (!sensor) {
+    throw new customError(404, "Sensor not found");
   }
-  if (isConnected) {
-    if (isConnected === "true") sensor.isConnected = true;
-    if (isConnected === "false") sensor.isConnected = false;
+
+  const updates = await req.json();
+  const allowedFields = ["name", "type", "uniqueId", "status", "isConnected"];
+  const hasUpdates = allowedFields.some((field) => field in updates);
+
+  if (!hasUpdates) {
+    throw new customError(400, "Please provide at least one field to update");
   }
-  if (uniqueId && uniqueId != sensor.uniqueId) {
-    const isExist = await Sensor.findOne({ uniqueId });
-    if (isExist) throw new customError(400, "Sensor uniqueId already exists");
-    sensor.uniqueId = uniqueId;
+
+  // Handle uniqueId change with duplication check
+  if (updates.uniqueId && updates.uniqueId !== sensor.uniqueId) {
+    const existing = await Sensor.findOne({ uniqueId: updates.uniqueId });
+    if (existing) {
+      throw new customError(400, "Sensor uniqueId already exists");
+    }
+    sensor.uniqueId = updates.uniqueId;
   }
+
+  // Update allowed fields dynamically
+  for (const field of allowedFields) {
+    if (field in updates && field !== "uniqueId") {
+      sensor[field] = updates[field];
+    }
+  }
+
   await sensor.save();
+
   return NextResponse.json({
     success: true,
-    message: "Sensor updated Successfully",
+    message: "Sensor updated successfully",
     sensor,
   });
 });

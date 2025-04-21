@@ -16,7 +16,7 @@ const sensorSchema = new mongoose.Schema(
     },
     uniqueId: { type: String, required: true },
     isConnected: { type: Boolean, required: true, default: false },
-    status: { type: Boolean, required: true, default: true },
+    status: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );
