@@ -33,6 +33,13 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: "/get-profile",
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -41,4 +48,5 @@ export const {
   useLoginMutation,
   useGetProfileQuery,
   useLogoutMutation,
+  useUpdateProfileMutation,
 } = authApi;

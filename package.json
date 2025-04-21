@@ -11,6 +11,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.0",
+    "datauri": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "mongoose": "^8.13.2",
