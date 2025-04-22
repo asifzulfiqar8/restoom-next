@@ -1,26 +1,36 @@
 "use client";
+import { useState, useEffect } from "react";
 import Button from "@/components/global/small/Button";
 import Input from "@/components/global/small/Input";
-import { useState } from "react";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/features/auth/authApi";
+import toast from "react-hot-toast";
 
 const Profile = () => {
-  // Initial profile state (replace defaults as needed)
-  const [profile, setProfile] = useState({
-    name: "John Doe",
-    picture: "/images/default/profile.png",
-    email: "john.doe@example.com",
-    phone: "123-456-7890",
-    dob: "1990-01-01",
-    nationality: "American",
-  });
+  const { data, isLoading } = useGetProfileQuery();
+  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
 
-  // Boolean state that determines if the form is in edit mode
   const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
-  // Store form changes in local state
-  const [formData, setFormData] = useState({ ...profile });
+  useEffect(() => {
+    if (data?.user) {
+      setProfile(data.user);
+      setFormData({
+        fullName: data.user.fullName || "",
+        email: data.user.email || "",
+        phoneNumber: data.user.phoneNumber || "",
+        dob: data.user.dob?.substring(0, 10) || "",
+        nationality: data.user.nationality || "",
+      });
+    }
+  }, [data]);
 
-  // Handle input change for controlled inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -29,53 +39,81 @@ const Profile = () => {
     }));
   };
 
-  // Toggle edit mode: If saving, update the main profile state
-  const handleToggleEdit = () => {
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleToggleEdit = async () => {
     if (isEditing) {
-      // Save the form data into profile
-      setProfile(formData);
-      // Simulate saving data (e.g. an API call) here as needed
-      console.log("Saved profile:", formData);
-    } else {
-      // When entering edit mode, sync formData with current profile
-      setFormData({ ...profile });
+      try {
+        const form = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+          form.append(key, value);
+        });
+
+        if (selectedImage) {
+          form.append("image", selectedImage);
+        }
+
+        const res = await updateProfile(form).unwrap();
+        toast.success(res.message || "Profile updated successfully");
+        setProfile(res.user);
+        setPreviewImage(null);
+        setSelectedImage(null);
+      } catch (err) {
+        console.error("Failed to update profile:", err);
+        toast.error(err?.data?.message || "Failed to update profile");
+      }
     }
     setIsEditing((prev) => !prev);
   };
 
-  // A helper component to render the profile view field
   const ProfileField = ({ label, value }) => (
     <div className="mb-4">
       <label className="block text-gray-600 font-medium mb-1">{label}</label>
-      <div className="text-gray-800">{value}</div>
+      <div className="text-gray-800">{value || "—"}</div>
     </div>
   );
+
+  if (isLoading || !profile) return <div>Loading...</div>;
 
   return (
     <div className="flex justify-center">
       <div className="w-full bg-white shadow rounded-xl p-6">
         <div className="flex flex-col items-center">
           <img
-            src={profile.picture}
-            alt={profile.name}
-            className="w-32 h-32 rounded-full mb-4 object-cover shadow"
+            src={
+              previewImage ||
+              profile?.image?.url ||
+              "/images/default/profile.png"
+            }
+            alt={formData.fullName}
+            className="size-32 md:size-52 rounded-full mb-4 object-cover shadow"
           />
-          <h2 className="text-2xl font-bold mb-2">{profile.name}</h2>
+          {isEditing && (
+            <div className="mb-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="border border-primary text-primary rounded-lg p-2 cursor-pointer"
+              />
+            </div>
+          )}
+          <h2 className="text-2xl font-bold mb-2">{formData.fullName}</h2>
         </div>
 
         <div className="mt-6">
           {isEditing ? (
             <form className="space-y-4">
               <Input
-                label="Name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-              <Input
-                label="Profile Picture URL"
-                name="picture"
-                value={formData.picture}
+                label="Full Name"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
               />
               <Input
@@ -87,9 +125,9 @@ const Profile = () => {
               />
               <Input
                 label="Phone Number"
-                name="phone"
+                name="phoneNumber"
                 type="tel"
-                value={formData.phone}
+                value={formData.phoneNumber}
                 onChange={handleChange}
               />
               <Input
@@ -109,7 +147,7 @@ const Profile = () => {
           ) : (
             <div className="space-y-4">
               <ProfileField label="Email" value={profile.email} />
-              <ProfileField label="Phone Number" value={profile.phone} />
+              <ProfileField label="Phone Number" value={profile.phoneNumber} />
               <ProfileField label="Date of Birth" value={profile.dob} />
               <ProfileField label="Nationality" value={profile.nationality} />
             </div>
@@ -120,7 +158,9 @@ const Profile = () => {
           <Button
             onClick={handleToggleEdit}
             width="max-w-[130px]"
-            text={isEditing ? "Save" : "Edit Profile"}
+            text={
+              isEditing ? (isUpdating ? "Saving..." : "Save") : "Edit Profile"
+            }
           />
         </div>
       </div>

@@ -77,6 +77,7 @@ const EditSensor = ({ onClose, selectedSensor }) => {
           cn="border-primary bg-transparent !text-primary"
         />
         <Button
+          type="submit"
           text={isLoading ? "Saving..." : "Save Sensor"}
           disabled={isLoading}
         />

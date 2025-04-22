@@ -73,6 +73,7 @@ const AddSensor = ({ onClose }) => {
           cn="border-primary bg-transparent !text-primary"
         />
         <Button
+          type="submit"
           text={isLoading ? "Adding..." : "Add Sensor"}
           disabled={isLoading}
         />

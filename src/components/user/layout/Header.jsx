@@ -7,13 +7,14 @@ import Notifications from "../Notifications";
 import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useLogoutMutation } from "@/features/auth/authApi";
+import { useGetProfileQuery, useLogoutMutation } from "@/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "@/features/auth/authSlice";
 import toast from "react-hot-toast";
 
 const Header = () => {
-  const [logout, { isLoading, isSuccess, isError }] = useLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
+  const { data } = useGetProfileQuery();
   const router = useRouter();
   const dispatch = useDispatch();
   const pathname = usePathname();
@@ -88,7 +89,7 @@ const Header = () => {
             </button>
             <div className="flex items-center gap-2 md:gap-4">
               <img
-                src="/images/default/profile.png"
+                src={data?.user?.image?.url || "/images/default/profile.png"}
                 alt="profile-pic"
                 className="w-[40px] h-[40px] rounded-lg object-cover hidden md:inline-block cursor-pointer"
                 onClick={toggleDropDown}
@@ -97,7 +98,7 @@ const Header = () => {
                 <div className="absolute top-[46px] right-0 bg-white shadow-md rounded-lg w-[150px] z-10">
                   <Link
                     className="flex items-center justify-between px-3 py-2 border-b border-gray-200"
-                    href={""}
+                    href={"/settings?tab=profile"}
                     onClick={() => setProfileActive(false)}
                   >
                     Profile

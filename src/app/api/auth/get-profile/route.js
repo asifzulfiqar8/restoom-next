@@ -1,5 +1,9 @@
 import { connectDb } from "@/configs/connectDb";
-import { configureCloudinary } from "@/lib/cloudinary";
+import {
+  configureCloudinary,
+  removeFromCloudinary,
+  uploadOnCloudinary,
+} from "@/lib/cloudinary";
 import { isAuthenticated } from "@/lib/isAuthenticated";
 import { Auth } from "@/models/auth.model";
 import { asyncHandler } from "@/utils/asynHanlder";
@@ -8,7 +12,6 @@ import { NextResponse } from "next/server";
 
 export const GET = asyncHandler(async () => {
   await connectDb();
-  configureCloudinary();
   const userGet = await isAuthenticated();
 
   const user = await Auth.findById(userGet?._id).select("-password");
@@ -24,6 +27,7 @@ export const GET = asyncHandler(async () => {
 
 export const PUT = asyncHandler(async (req) => {
   await connectDb();
+  configureCloudinary();
   const userGet = await isAuthenticated();
 
   const user = await Auth.findById(userGet?._id).select("-password");

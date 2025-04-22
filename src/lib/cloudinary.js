@@ -3,10 +3,15 @@ import path from "path";
 import DataURIParser from "datauri/parser.js";
 import { getEnv } from "@/configs/config";
 
-export const getDataUri = (file) => {
-  const parser = new DataURIParser();
-  const extName = path.extname(file.originalname).toString();
-  return parser.format(extName, file.buffer);
+export const getDataUri = async (file) => {
+  const parser = new DataURIParser(); // this line was missing in your latest version
+
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const mime = file.type || "image/jpeg"; // fallback if no type
+  const extName = `.${mime.split("/")[1]}`;
+
+  return parser.format(extName, buffer);
 };
 
 export const configureCloudinary = async () => {
