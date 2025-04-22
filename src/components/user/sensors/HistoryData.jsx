@@ -62,14 +62,14 @@ const HistoryData = () => {
             dataKey="date"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#6B7280", fontSize: 12 }}
+            tick={{ fill: "#A449EB", fontSize: 12 }}
             padding={{ left: 10, right: 10 }}
           />
           <YAxis
             domain={[0, 55]} // increase range to give space for thick line
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#6B7280", fontSize: 12 }}
+            tick={{ fill: "#A449EB", fontSize: 12 }}
             tickFormatter={(val) => `${val}%`}
           />
           <Tooltip
@@ -80,19 +80,19 @@ const HistoryData = () => {
             {data.map((entry, idx) => (
               <Cell
                 key={idx}
-                fill={idx === activeIndex ? "#7C3AED" : "#E5E7EB"}
+                fill={idx === activeIndex ? "#A449EB" : "#E5E7EB"}
                 radius={[4, 4, 0, 0]}
               />
             ))}
           </Bar>
           <Line
             dataKey="line"
-            stroke="#7C3AED"
+            stroke="#A449EB"
             strokeWidth={2}
             strokeLinecap="round"
             dot={{
               r: 4,
-              fill: "#7C3AED",
+              fill: "#A449EB",
               stroke: "#fff",
               strokeWidth: 2,
             }}
