@@ -439,6 +439,24 @@ const floorListData = [
   },
 ];
 
+const alertHistoryData = [
+  {
+    date: "2023-10-01",
+    alertName: "Sensor Disconnected",
+    message: "Sensor 123456789 has been disconnected.",
+  },
+  {
+    date: "2023-10-02",
+    alertName: "High Humidity Level",
+    message: "Humidity level in Restroom 5 is above normal.",
+  },
+  {
+    date: "2023-10-03",
+    alertName: "Low Battery",
+    message: "Battery level of Sensor 987654321 is low.",
+  },
+];
+
 export {
   dashboardCardsData,
   pieChartData,
@@ -453,4 +471,5 @@ export {
   lineChartData,
   mostUsedRoomsList,
   floorListData,
+  alertHistoryData,
 };
