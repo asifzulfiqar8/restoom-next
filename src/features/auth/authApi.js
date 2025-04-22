@@ -14,6 +14,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
       }),
+      providesTags: ["Profile"],
     }),
     login: builder.mutation({
       query: (data) => ({
@@ -21,6 +22,7 @@ export const authApi = createApi({
         method: "POST",
         body: data,
       }),
+      providesTags: ["Profile"],
     }),
     getProfile: builder.query({
       query: () => ({
@@ -53,3 +55,5 @@ export const {
   useLogoutMutation,
   useUpdateProfileMutation,
 } = authApi;
+
+export const resetAuthApiState = authApi.util.resetApiState;

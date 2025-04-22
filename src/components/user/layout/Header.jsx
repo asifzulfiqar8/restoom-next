@@ -7,7 +7,11 @@ import Notifications from "../Notifications";
 import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetProfileQuery, useLogoutMutation } from "@/features/auth/authApi";
+import {
+  resetAuthApiState,
+  useGetProfileQuery,
+  useLogoutMutation,
+} from "@/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "@/features/auth/authSlice";
 import toast from "react-hot-toast";
@@ -47,6 +51,7 @@ const Header = () => {
       const res = await logout().unwrap();
 
       dispatch(deleteUser());
+      dispatch(resetAuthApiState());
 
       if (res?.success) {
         toast.success(res?.message || "Logout successfully");
@@ -57,6 +62,7 @@ const Header = () => {
       router.push("/login");
     } catch (error) {
       dispatch(deleteUser());
+      dispatch(resetAuthApiState());
       toast.error(error?.data?.message || "Something went wrong");
       router.push("/login");
     }
