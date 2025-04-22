@@ -1,5 +1,4 @@
 "use client";
-import Loader from "@/components/global/Loader";
 import Modal from "@/components/global/Modal";
 import Button from "@/components/global/small/Button";
 import ToggleButton from "@/components/global/small/ToggleButton";
@@ -59,8 +58,6 @@ const Sensors = () => {
     }
   };
 
-  if (isLoading) return <Loader />;
-
   return (
     <section className="bg-white p-4 md:p-5 rounded-[10px]">
       <div className="flex justify-between items-center">
@@ -71,16 +68,23 @@ const Sensors = () => {
           <IoIosAddCircle className="text-primary text-2xl" />
         </button>
       </div>
+
       <div className="mt-6">
-        <DataTable
-          data={data?.sensors || []}
-          columns={tableColumns(handleStatusHandler, modalOpenHandler)}
-          customStyles={tableStyles}
-          pagination
-          fixedHeader
-          fixedHeaderScrollHeight="60vh"
-          selectableRows
-        />
+        {isLoading ? (
+          <div className="flex h-64 items-center justify-center">
+            <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
+          </div>
+        ) : (
+          <DataTable
+            data={data?.sensors || []}
+            columns={tableColumns(handleStatusHandler, modalOpenHandler)}
+            customStyles={tableStyles}
+            pagination
+            fixedHeader
+            fixedHeaderScrollHeight="60vh"
+            selectableRows
+          />
+        )}
       </div>
       {modalType === "add" && (
         <Modal onClose={modalCloseHandler} title={"Add Sensor"}>

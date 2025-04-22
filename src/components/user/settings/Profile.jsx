@@ -7,6 +7,7 @@ import {
   useUpdateProfileMutation,
 } from "@/features/auth/authApi";
 import toast from "react-hot-toast";
+import Loader from "@/components/global/Loader";
 
 const Profile = () => {
   const { data, isLoading } = useGetProfileQuery();
@@ -79,7 +80,7 @@ const Profile = () => {
     </div>
   );
 
-  if (isLoading || !profile) return <div>Loading...</div>;
+  if (isLoading || !profile) return <Loader />;
 
   return (
     <div className="flex justify-center">
