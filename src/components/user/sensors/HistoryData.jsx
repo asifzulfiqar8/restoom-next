@@ -42,7 +42,7 @@ const HistoryData = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <div className="w-full h-[333px] shadow-md rounded-[15px] p-4 md:p-5">
+    <div className="w-full h-[333px] shadow-md rounded-[15px] p-4 md:p-5 border border-gray-200">
       <h6 className="text-primary text-base font-semibold mb-5">
         Historical Data
       </h6>

@@ -3,7 +3,7 @@ import DataTable from "react-data-table-component";
 
 const AlertHistory = () => {
   return (
-    <div className="shadow-md rounded-[15px] p-4 md:p-5">
+    <div className="shadow-md rounded-[15px] p-4 md:p-5 border border-gray-200">
       <h6 className="text-primary text-base font-semibold">Alert History</h6>
       <div className="mt-6">
         <DataTable
