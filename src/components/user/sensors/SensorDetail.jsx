@@ -1,12 +1,12 @@
 "use client";
-import Loader from "@/components/global/Loader";
 import Spinner from "@/components/global/small/Spinner";
 import { useGetSingleSensorQuery } from "@/features/sensor/sensorApi";
 import { useEffect, useState } from "react";
-import BasicInfo from "./BasicInfo";
-import StatusAndData from "./StatusAndData";
-import SpecificInfo from "./SpecificInfo";
 import AlertHistory from "./AlertHistory";
+import BasicInfo from "./BasicInfo";
+import HistoryData from "./HistoryData";
+import SpecificInfo from "./SpecificInfo";
+import StatusAndData from "./StatusAndData";
 
 const SensorDetail = ({ id }) => {
   const { data, isLoading, error } = useGetSingleSensorQuery(id);
@@ -29,13 +29,14 @@ const SensorDetail = ({ id }) => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-2 gap-4 mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-5">
           <div className="flex flex-col gap-5">
             <BasicInfo sensorInfo={sensorData} />
             <StatusAndData sensorInfo={sensorData} />
             <SpecificInfo />
           </div>
           <div className="flex flex-col gap-5">
+            <HistoryData />
             <AlertHistory />
           </div>
         </div>
