@@ -18,6 +18,7 @@ import { HiOutlineEye } from "react-icons/hi2";
 import { IoIosAddCircle } from "react-icons/io";
 import AddSensor from "./AddSensor";
 import EditSensor from "./EditSensor";
+import Spinner from "@/components/global/small/Spinner";
 
 const Sensors = () => {
   const [modalType, setModalType] = useState("");
@@ -71,9 +72,7 @@ const Sensors = () => {
 
       <div className="mt-6">
         {isLoading ? (
-          <div className="flex h-64 items-center justify-center">
-            <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
-          </div>
+          <Spinner />
         ) : (
           <DataTable
             data={data?.sensors || []}

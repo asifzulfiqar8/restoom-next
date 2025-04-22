@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/components/global/Loader";
+import Spinner from "@/components/global/small/Spinner";
 import { useGetSingleSensorQuery } from "@/features/sensor/sensorApi";
 import { useEffect, useState } from "react";
 
@@ -15,9 +16,19 @@ const SensorDetail = ({ id }) => {
     }
   }, [data]);
 
-  if (isLoading) return <Loader />;
   if (error) return <div className="text-red-500">Error: {error}</div>;
-  return <div>SensorDetail</div>;
+  return (
+    <section className="bg-white p-4 md:p-5 rounded-[10px]">
+      <h4 className="text-base md:text-xl font-semibold text-[#05004E]">
+        Sensor Details
+      </h4>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="grid grid-cols-2 gap-4 mt-5">grid</div>
+      )}
+    </section>
+  );
 };
 
 export default SensorDetail;
