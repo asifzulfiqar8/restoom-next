@@ -1,14 +1,34 @@
 import Button from "@/components/global/small/Button";
 import MarkBuildingModel from "./MarkBuildingModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setBuilding } from "@/features/building/buildingSlice";
 
 const BuildingModel = ({ setCurrentStep }) => {
+  const dispatch = useDispatch();
   const [buildingModelImage, setBuildingModelImage] = useState(null);
   const [polygons, setPolygons] = useState([]);
   const [file, setFile] = useState(null);
+  const building = useSelector((state) => state.building);
   const nextBtnHandler = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    if (polygons.length > 0 && buildingModelImage) {
+      console.log("done");
+      dispatch(
+        setBuilding({
+          buildingModelPreview: buildingModelImage,
+          buildingModelCoordinates: polygons,
+        })
+      );
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
+
+  useEffect(() => {
+    if (building?.buildingModelPreview && building?.buildingModelCoordinates) {
+      setBuildingModelImage(building?.buildingModelPreview);
+      setPolygons(building.buildingModelCoordinates);
+    }
+  }, [building]);
   return (
     <div>
       <h6 className="text-base text-primary font-medium">Building Model</h6>
