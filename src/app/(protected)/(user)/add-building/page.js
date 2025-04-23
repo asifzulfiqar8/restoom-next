@@ -1,5 +1,7 @@
-const AddBuilding = () => {
-  return <div>AddBuilding</div>;
+import AddBuilding from "@/components/user/addBuilding/AddBuilding";
+
+const AddBuildingPage = () => {
+  return <AddBuilding />;
 };
 
-export default AddBuilding;
+export default AddBuildingPage;
