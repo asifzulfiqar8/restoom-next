@@ -2,12 +2,14 @@
 const { configureStore } = require("@reduxjs/toolkit");
 const { authApi } = require("./features/auth/authApi");
 import { Provider } from "react-redux";
-import authReducer from "./features/auth/authSlice";
 import { sensorApi } from "./features/sensor/sensorApi";
+import authSlice from "./features/auth/authSlice";
+import buildingSlice from "./features/building/buildingSlice";
 
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+    [authSlice.name]: authSlice.reducer,
+    [buildingSlice.name]: buildingSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [sensorApi.reducerPath]: sensorApi.reducer,
   },

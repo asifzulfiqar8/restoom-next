@@ -38,7 +38,7 @@ const AddBuilding = () => {
         {steps.map((step, index) => (
           <div key={index} className="flex items-center">
             <div
-              className={`size-[32px] transition-all duration-200 rounded-full text-lg font-medium grid place-items-center ${
+              className={`size-[32px] rounded-full text-lg font-medium grid place-items-center ${
                 index > currentStep
                   ? "bg-[#D9D9D9] text-[#11111180]"
                   : index == currentStep
@@ -50,14 +50,18 @@ const AddBuilding = () => {
             </div>
             <h6
               className={`text-base md:text-lg font-semibold ml-3 ${
-                index + 1 <= currentStep ? "text-primary" : "text-black"
+                index > currentStep
+                  ? "text-[#11111180]"
+                  : index == currentStep
+                  ? "text-[#000]"
+                  : "text-primary"
               }`}
             >
               {step}
             </h6>
             {index < steps.length - 1 && (
               <div
-                className={`h-[2px] w-[100px] transition-all duration-300 ${
+                className={`h-[2px] w-[100px] ${
                   index >= currentStep ? "bg-[#D9D9D9]" : "bg-primary"
                 }`}
               ></div>
