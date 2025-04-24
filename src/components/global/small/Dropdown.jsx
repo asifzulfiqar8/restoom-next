@@ -69,7 +69,7 @@ const Dropdown = ({
         >
           {options.map((option) => (
             <li
-              className="py-2 text-xs px-3 border-b hover:bg-[#00000005]"
+              className="py-2 text-xs px-3 border-b border-gray-300 hover:bg-[#00000005]"
               key={option.value}
               onClick={() => selectHandler(option)}
             >

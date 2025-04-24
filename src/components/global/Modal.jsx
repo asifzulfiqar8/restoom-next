@@ -9,7 +9,7 @@ const Modal = ({ title, onClose, children, width }) => {
       <div
         className={` ${
           title === "qr" ? "bg-red" : "bg-white"
-        } rounded-[12px] shadow-lg p-4 md:p-6 overflow-y-hidden h-fit max-h-full  ${
+        } rounded-[12px] shadow-lg p-4 md:p-6 overflow-y-scroll h-fit max-h-full scroll-0  ${
           width ? width : "w-[500px] sm:w-[600px] md:w-[800px]"
         }`}
         onClick={(e) => e.stopPropagation()}
