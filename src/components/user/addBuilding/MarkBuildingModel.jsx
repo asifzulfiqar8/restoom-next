@@ -58,17 +58,15 @@ const MarkBuildingModel = ({
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [sensorPopup, setSensorPopup] = useState(false);
   const [selectedPolygon, setSelectedPolygon] = useState(null);
-  const [sensorIdInput, setSensorIdInput] = useState("");
-  const [selectedSensor, setSelectedSensor] = useState("No sensor");
+  const [floorIdInput, setFloorIdInput] = useState("");
   const [color, setColor] = useState("#A449EB");
   const [reEditModalOpen, setReEditModalOpen] = useState(false);
   const [selectedPolygonId, setSelectedPolygonId] = useState("");
-  const [selectedPolygonSensor, setSelectedPolygonSensor] = useState("");
 
   const openSensorPopup = (polygon) => {
     setSelectedPolygon(polygon);
     setSensorPopup(true);
-    setSensorIdInput("");
+    setFloorIdInput("");
   };
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
@@ -116,11 +114,10 @@ const MarkBuildingModel = ({
   };
 
   // Function to open modal with polygon ID
-  const handlePolygonClick = (polygonId, polygonSensor) => {
+  const handlePolygonClick = (polygonId) => {
     const polygonToEdit = polygons.find((polygon) => polygon.id === polygonId);
     setSelectedPolygon(polygonToEdit);
     setSelectedPolygonId(polygonId);
-    setSelectedPolygonSensor(polygonSensor);
     setReEditModalOpen(true);
   };
 
@@ -189,6 +186,7 @@ const MarkBuildingModel = ({
             openSensorPopup,
             handleReEditPolygon,
             handlePolygonClick,
+            selectedColor: color,
           })
         }
         onMouseDown={(event) =>
@@ -353,29 +351,17 @@ const MarkBuildingModel = ({
       )}
       {sensorPopup && selectedPolygon && (
         <Modal
-          title="Add Sensor"
+          title="Add Floor"
           isCrossShow={false}
           onClose={() => setSensorPopup(false)}
         >
           <div className="flex flex-col gap-2">
             <Input
               type="text"
-              placeholder="Sensor Id"
-              label="Sensor Id"
-              value={sensorIdInput}
-              onChange={(e) => setSensorIdInput(e.target.value)}
-            />
-
-            <Dropdown
-              defaultText={selectedSensor}
-              options={[
-                { option: "Sensor 1", value: "sensor-1" },
-                { option: "Sensor 2", value: "sensor-2" },
-              ]}
-              label="Sensor Name"
-              onSelect={(selectedOption) =>
-                setSelectedSensor(selectedOption.value)
-              }
+              placeholder="Floor ID"
+              label="Floor ID"
+              value={floorIdInput}
+              onChange={(e) => setFloorIdInput(e.target.value)}
             />
 
             <Dropdown
@@ -408,15 +394,15 @@ const MarkBuildingModel = ({
 
             <div className="flex justify-center gap-3">
               <Button
-                disabled={!sensorIdInput}
+                disabled={!floorIdInput}
                 text="Add"
                 width="w-fit"
                 onClick={() => {
                   sensorInfoSubmitHandler(
-                    sensorIdInput,
+                    floorIdInput,
                     polygons,
                     selectedPolygon,
-                    selectedSensor,
+                    null, // No sensor for building model
                     color,
                     setPolygons,
                     setSensorPopup
@@ -426,7 +412,7 @@ const MarkBuildingModel = ({
               />
               <Button
                 width="w-fit"
-                text="cancel"
+                text="Cancel"
                 onClick={() =>
                   handleCancelPolygon(
                     setSensorPopup,
@@ -442,26 +428,14 @@ const MarkBuildingModel = ({
         </Modal>
       )}
       {reEditModalOpen && (
-        <Modal title="Add Sensor" onClose={() => setReEditModalOpen(false)}>
+        <Modal title="Edit Floor" onClose={() => setReEditModalOpen(false)}>
           <div className="flex flex-col gap-2">
             <Input
               type="text"
-              placeholder="Sensor Id"
-              label="Sensor Id"
+              placeholder="Floor ID"
+              label="Floor ID"
               value={selectedPolygonId}
               onChange={(e) => setSelectedPolygonId(e.target.value)}
-            />
-            <Dropdown
-              defaultText={selectedPolygonSensor || selectedSensor}
-              options={[
-                { option: "No sensor", value: "no-sensor" },
-                { option: "Sensor 1", value: "sensor-1" },
-                { option: "Sensor 2", value: "sensor-2" },
-              ]}
-              label="Sensor Name"
-              onSelect={(selectedOption) =>
-                setSelectedPolygonSensor(selectedOption.value)
-              }
             />
 
             <Dropdown
@@ -500,8 +474,8 @@ const MarkBuildingModel = ({
                     setPolygons,
                     selectedPolygon,
                     selectedPolygonId,
-                    selectedPolygonSensor,
-                    selectedSensor,
+                    null, // No sensor for building model
+                    null, // No new sensor
                     color,
                     setReEditModalOpen
                   )
